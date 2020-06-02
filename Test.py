@@ -1,4 +1,8 @@
-## Test script 
+# Test script
+#
+#
+#
+#
 
 import sys
 
@@ -6,9 +10,10 @@ task = input('Which task do you wish to perform (1 or 2) ? ')
 
 if task == '1': # First Task
 
-	import ssl 
-	from cryptography import x509
-	from cryptography.hazmat.backends import default_backend
+	# Bad practice to fragment the import statements, but I think it is easier to read as an exercise.
+	import ssl # Used to get the PEM certificate
+	from cryptography import x509 # Used to read the PEM certificate
+	from cryptography.hazmat.backends import default_backend # Used to read the PEM certificate
 
 	URL = input('Please input the URL for task 1: ') 
 	port = input('Please input the port for task 1 (default is 443): ') 
@@ -18,7 +23,7 @@ if task == '1': # First Task
 
 	connection = ssl.create_connection((URL, port))
 	context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-	socket = context.wrap_socket(connection, server_hostname=URL) ## Cannot use get_server_certificate because it fails SNI
+	socket = context.wrap_socket(connection, server_hostname=URL) # Cannot use get_server_certificate because it fails SNI
 	
 	cert_PEM = bytes(ssl.DER_cert_to_PEM_cert(socket.getpeercert(True)),'utf8') # Convert to bytes for x509
 	
@@ -42,11 +47,13 @@ if task == '1': # First Task
 		print('Certificate is not valid (expired)')
 	
 	print('')
-	
+
+
 elif task == '2': # Second task
 	
-	import requests ## To perform the GET request
-	from bs4 import BeautifulSoup ## Parser to navigate the HTML result
+	# Bad practice to fragment the import statements, but I think it is easier to read as an exercise.
+	import requests # To perform the GET request
+	from bs4 import BeautifulSoup # Parser to navigate the HTML result
 	
 	URL = input('Please input the URL for task 2: ') 
 	
@@ -59,4 +66,7 @@ elif task == '2': # Second task
 	category = soup.body.find('h4', attrs={'class':'info_title'}).text[10:] # Getting the category
 	
 	print('According to Fortiguard, ' + URL + ' is a ' + category + ' website.') # Fancy printing
-	
+
+
+else:
+	raise Exception('Please only enter either 1 or 2 as a task number.')

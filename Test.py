@@ -4,10 +4,7 @@ import sys
 
 task = int(sys.argv[1])
 
-# 1st task: Fetch and Read SSL certificate from a given URL
-
-
-if task == 1:
+if task == 1: # First Task
 
 	import ssl 
 	from cryptography import x509
@@ -42,4 +39,20 @@ if task == 1:
 		print('Certificate is not valid (expired)')
 	
 	print('')
+	
+elif task == 2: # Second task
+	
+	import requests ## To perform the GET request
+	from bs4 import BeautifulSoup ## Parser to navigate the HTML result
+	
+	URL = sys.argv[2] 
+	
+	fort_URL = 'https://fortiguard.com/webfilter?q=' + URL 
+	
+	response = requests.get(fort_URL)
+	
+	soup = BeautifulSoup(response.text, features="html5lib")
+		
+	print(soup.body.find('h4', attrs={'class':'info_title'}).text)
+	
 	

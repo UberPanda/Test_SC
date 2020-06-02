@@ -2,16 +2,19 @@
 
 import sys
 
-task = int(sys.argv[1])
+task = input('Which task do you wish to perform (1 or 2) ? ')
 
-if task == 1: # First Task
+if task == '1': # First Task
 
 	import ssl 
 	from cryptography import x509
 	from cryptography.hazmat.backends import default_backend
 
-	URL = sys.argv[2] ## Formatting is basic, no --parameter
-	port = sys.argv[3]
+	URL = input('Please input the URL for task 1: ') 
+	port = input('Please input the port for task 1 (default is 443): ') 
+	
+	if not port: # Default to 443 if empty
+		port = 443
 
 	connection = ssl.create_connection((URL, port))
 	context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
@@ -40,19 +43,20 @@ if task == 1: # First Task
 	
 	print('')
 	
-elif task == 2: # Second task
+elif task == '2': # Second task
 	
 	import requests ## To perform the GET request
 	from bs4 import BeautifulSoup ## Parser to navigate the HTML result
 	
-	URL = sys.argv[2] 
+	URL = input('Please input the URL for task 2: ') 
 	
 	fort_URL = 'https://fortiguard.com/webfilter?q=' + URL 
 	
-	response = requests.get(fort_URL)
+	response = requests.get(fort_URL) # Simple get request
 	
-	soup = BeautifulSoup(response.text, features="html5lib")
-		
-	print(soup.body.find('h4', attrs={'class':'info_title'}).text)
+	soup = BeautifulSoup(response.text, features="html5lib") # Parsing
 	
+	category = soup.body.find('h4', attrs={'class':'info_title'}).text[10:] # Getting the category
+	
+	print('According to Fortiguard, ' + URL + ' is a ' + category + ' website.') # Fancy printing
 	

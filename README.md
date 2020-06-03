@@ -16,4 +16,4 @@ To run, the script requires the following modules :
 To use it, simply run the script and, when asked, input: 
 1. The task number (1 or 2)
 2. The URL to use
-3. for task 1, the port to use (default used if empty is 443)
+3. For task 1, the port to use (default used if empty is 443)
